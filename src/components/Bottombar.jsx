@@ -1,20 +1,35 @@
-import React, { useState } from 'react'
-import { AddIconCircle, FullScreenIcon, MixIcon, NextPrevIcon, PauseIcon, RepeatIcon, VolumeIcon } from '../icons'
+import React, { useContext, useEffect, useState } from 'react'
+import { AddIconCircle, FullScreenIcon, MixIcon, NextPrevIcon, PauseIcon, PlayIcon, RepeatIcon, VolumeIcon } from '../icons'
 import classNames from 'classnames'
 import { IoIosArrowDown } from "react-icons/io";
+import { Context } from '../context';
+import axios from 'axios';
 
 const Bottombar = () => {
 
   const [timeLine, setTimeLine] = useState(0)
   const [volume, setVolume] = useState(0)
   const [active, setActive] = useState(false)
+  const {trackId, play, setPlay, tracks, currentTrack, setCurrentTrack} = useContext(Context)
+
+  useEffect(() => {
+    setPlay(true)
+  },[currentTrack])
+
+ console.log(currentTrack);
+ const audio = new Audio()
+ audio.src = currentTrack?.track?.preview_url || ''
+
+ useEffect(() => {
+  play ? audio.play() : audio.pause()
+ }, [play])
 
   const clickHandle = e => {
     if(e.target.classList.contains('add')){
       console.log('add');
     }
     else if(e.target.classList.contains('play')){
-      console.log('play');
+      setPlay(play => !play)
     }
     else{
       setActive(true)
@@ -26,10 +41,16 @@ const Bottombar = () => {
       <div onClick={clickHandle} className={classNames('flex gap-2 sm:rounded-md w-full px-2 sm:px-4 items-center', {'hidden sm:flex': active})}>
         <div className='flex gap-5 items-center w-full'>
           <div className='flex gap-3 items-center pointer-events-none'>
-            <img className='w-14 aspect-square object-cover rounded-md' src="https://i.ytimg.com/vi/CRzuQ9xKYf8/hq720_live.jpg?sqp=COSErLUG-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDOeE-B9XOUQSEkDf4gDdEwKS8P5A" alt="cover" />
+            <img className='w-14 aspect-square object-cover rounded-md' src={ currentTrack?.track?.album.images[0].url || ''} alt="cover" />
             <div className='flex flex-col'>
-              <span className='font-medium'>Medcezir</span>
-              <span className='font-medium text-white/30'>Ceza</span>
+              <span className='font-medium'>{currentTrack?.track?.name}</span>
+              <div className='flex gap-1.5 whitespace-nowrap overflow-hidden text-ellipsis'>
+                {
+                  currentTrack?.track?.artists.map((artist, key) => (
+                    <span key={key} className='font-medium text-white/30'>{artist.name}, </span>
+                  ))
+                }
+              </div>
             </div>
           </div>
             <button className='add'>
@@ -47,7 +68,9 @@ const Bottombar = () => {
                 <NextPrevIcon className='w-5 h-5 pointer-events-none' />
               </button>
               <button className='transitiona-all duration-500 play hover:scale-105 sm:bg-white rounded-full p-2'>
-                <PauseIcon className='w-5 h-5 sm:text-black pointer-events-none' />
+                {
+                  play ? <PlayIcon className='w-5 h-5 sm:text-black pointer-events-none' /> : <PauseIcon className='w-5 h-5 sm:text-black pointer-events-none' />
+                }
               </button>
               <button className='transitiona-all hidden next sm:block rotate-180 duration-500 opacity-75 hover:opacity-100'>
                 <NextPrevIcon className='w-5 h-5 pointer-events-none' />

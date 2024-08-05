@@ -17,9 +17,34 @@ export const Provider = ({ children }) => {
     "user-read-recently-played",
   ];
 
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
+  const [trackId, setTrackId] = useState(0);
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [tracks, setTracks] = useState(null);
+  const [play, setPlay] = useState(false);
+  const options = {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  };
 
-  const data = { clientId, redirectURL, apiURL, scope, token, setToken };
+  const data = {
+    clientId,
+    redirectURL,
+    apiURL,
+    scope,
+    token,
+    setToken,
+    options,
+    trackId,
+    setTrackId,
+    tracks,
+    setTracks,
+    currentTrack,
+    setCurrentTrack,
+    play,
+    setPlay,
+  };
 
   return <Context.Provider value={data}>{children}</Context.Provider>;
 };

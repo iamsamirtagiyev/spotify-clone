@@ -31,7 +31,7 @@ const Layout = () => {
         <div className="w-full h-screen bg-black text-white flex flex-col sm:gap-2 sm:p-2">
           <div className="flex gap-2 h-full sm:flex-row flex-col">
             <Sidebar/>
-            <div className="h-full">
+            <div className="sm:h-calc h-full overflow-auto w-full bg-black">
               <Outlet/>
             </div>
           </div>
