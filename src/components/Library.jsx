@@ -10,7 +10,7 @@ const Library = () => {
   return (
     <div className='sm:rounded-md py-5 px-2 bg-zinc-900 hidden sm:flex h-full flex-col'>
         <div className='flex items-center justify-center px-2 md:justify-between w-full'>
-            <Link to='/library' className='flex gap-2 items-center opacity-80 hover:opacity-100 cursor-pointer'>
+            <Link to='/favorites' className='flex gap-2 items-center opacity-80 hover:opacity-100 cursor-pointer'>
                 <LibraryIcon className='w-6 h-6' />
                 <span className='font-medium hidden md:block'>Your Library</span>
             </Link>

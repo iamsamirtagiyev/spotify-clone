@@ -6,7 +6,7 @@ const MusicList = ({data}) => {
     const {setTrackId, tracks, trackId, setTracks, currentTrack,  setCurrentTrack} = useContext(Context)
 
     setTracks(data?.items)
-    setCurrentTrack(tracks[trackId])
+    setCurrentTrack(tracks[trackId].track)
 
     
 

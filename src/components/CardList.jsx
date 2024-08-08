@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context'
 import Card from './Card'
+import Loader from './Loader'
 
 
 const CardList = () => {
@@ -29,9 +30,9 @@ const CardList = () => {
     }, [])
 
     return (
-    <div>
+    <div className='flex items-center justify-center'>
         {
-            playlists && (
+            playlists ? (
                 <div>
                     <h1 className='text-3xl font-bold m-3'>{playlists.message}</h1>
                     <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 p-3'>
@@ -42,7 +43,7 @@ const CardList = () => {
                         }
                     </div>
                 </div>
-            )
+            ) : <Loader/>
         }
     </div>
   )

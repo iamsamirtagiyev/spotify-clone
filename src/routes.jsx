@@ -34,7 +34,7 @@ const router = [
             {
                 path: 'favorites',
                 element: <Favorites/>
-            }
+            },
         ]
     }
 ]

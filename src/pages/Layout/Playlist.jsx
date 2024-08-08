@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from '../../components/Header'
 import MusicList from '../../components/MusicList'
+import Loader from '../../components/Loader'
 
 const Playlist = () => {
 
@@ -34,12 +35,12 @@ const Playlist = () => {
   return (
     <div className='rounded-md h-full'>
         {
-            playlist && (
+            playlist ? (
                 <div className=' w-full bg-center bg-fixed rounded-md bg-cover' style={{backgroundImage: `url(${playlist.images[0].url})`}}>
                     <Header data={playlist} />
                     <MusicList data={playlist.tracks} />
                 </div>
-            )
+            ) :<div className='text-center w-full grid place-content-center'><Loader/></div>
         }
     </div>
   )

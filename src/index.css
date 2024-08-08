@@ -14,7 +14,7 @@
 
 @layer components {
   .h-calc {
-    height: calc(100vh - 104px);
+    height: calc(100vh - 100px);
   }
 
   .range {

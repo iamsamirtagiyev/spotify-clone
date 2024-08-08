@@ -12,6 +12,7 @@ const Bottombar = () => {
   const [timeLine, setTimeLine] = useState(0)
   const [volume, setVolume] = useState(100)
   const [mix, setMix] = useState(false)
+  const [repeat, setRepeat] = useState(false)
   const {trackId, setTrackId, play, setPlay, tracks, currentTrack, setCurrentTrack} = useContext(Context)
   const audioRef = useRef()
   const dispatch = useDispatch()
@@ -20,6 +21,8 @@ const Bottombar = () => {
 useEffect(() => {
   console.log(favoriteTracks);
 }, [favoriteTracks])
+
+
 
   useEffect(() => {
     if(currentTrack){
@@ -53,7 +56,9 @@ useEffect(() => {
 useEffect(() => {
   if(currentTrack){
     if(timeLine === Math.floor(audioRef.current?.duration) + 1){
-      nextHandle()
+      
+        nextHandle()
+      
     }
   }
 }, [timeLine])
@@ -88,7 +93,7 @@ useEffect(() => {
  }
 
 const favorite = track => {
-  if(favoriteTracks.find(tracks => tracks.track.id == track.track.id)){
+  if(favoriteTracks.find(tracks => tracks.id == track.id)){
     dispatch(removeFavorite(track))
   }
   else{
@@ -101,20 +106,21 @@ const favorite = track => {
     setTimeLine(e.target.value)
   }
 
+
   return (
     <>
     {
       currentTrack ? (
-    <div className={classNames('bg-zinc-900 sm:bg-black md:gap-5  overflow-auto  flex items-center h-20 sm:!h-24 sm:static fixed w-full left-1/2 -translate-x-1/2 sm:translate-x-0 bottom-[68px]  transition-all duration-500')} style={{backgroundImage: `linear-gradient(url(${currentTrack?.track?.album.images[0].url || ''})`}}>
+    <div className={classNames('bg-zinc-900 sm:bg-black md:gap-5  overflow-auto  flex items-center h-20 sm:!h-24 sm:static fixed w-full left-1/2 -translate-x-1/2 sm:translate-x-0 bottom-[68px]  transition-all duration-500')} style={{backgroundImage: `linear-gradient(url(${currentTrack?.album?.images[0].url || ''})`}}>
       <div className={classNames('flex gap-2 sm:rounded-md w-full h-full px-2 sm:px-4 items-center bg-black/40 sm:bg-black backdrop-blur-3xl')} >
         <div className='flex gap-5 items-center w-full'>
           <div className='flex gap-3 items-center pointer-events-none'>
-            <img className='w-14 aspect-square object-cover rounded-md' src={ currentTrack?.track?.album.images[0].url || ''} alt="cover" />
+            <img className='w-14 aspect-square object-cover rounded-md' src={ currentTrack?.album?.images[0].url || ''} alt="cover" />
             <div className='flex flex-col'>
-              <span className='font-medium'>{ currentTrack?.track?.name || ''}</span>
+              <span className='font-medium'>{ currentTrack?.name || ''}</span>
               <div className='flex gap-1.5 whitespace-nowrap overflow-hidden text-ellipsis'>
                 {
-                  currentTrack?.track?.artists.map((artist, key) => (
+                  currentTrack?.artists?.map((artist, key) => (
                     <span key={key} className='font-medium text-white/30'>{artist.name}, </span>
                   ))
                 }
@@ -124,12 +130,12 @@ const favorite = track => {
             <button className='add' onClick={() => favorite(currentTrack)}>
               {
               
-              (favoriteTracks.find(track => track.track.id == currentTrack.track.id)) ? (<div className='bg-green-600 rounded-full p-1'>
+              (favoriteTracks.find(track => track.id == currentTrack.id)) ? (<div className='bg-green-600 rounded-full p-1'>
                 <FaCheck/>
               </div>) : <AddIconCircle className='w-5 h-5 pointer-events-none' />
               }
             </button>
-        <audio ref={audioRef} hidden src={ currentTrack?.track.preview_url || ''} controls></audio>
+        <audio ref={audioRef} hidden src={ currentTrack?.preview_url || ''} controls></audio>
         </div>
         <div className='w-full flex flex-col gap-3'>
           <div className='flex items-center gap-5 justify-center'>
@@ -149,7 +155,7 @@ const favorite = track => {
                 <NextPrevIcon className='w-5 h-5 pointer-events-none' />
               </button>
             </div>
-            <button className='transitiona-all hidden repeat sm:block duration-500 opacity-75 hover:opacity-100'>
+            <button onClick={() => setRepeat(repeat => !repeat)} className={classNames('transitiona-all hidden repeat sm:block duration-500 opacity-75 hover:opacity-100', { 'text-green-600': repeat })}>
               <RepeatIcon className='w-4 h-4 pointer-events-none' />
             </button>
           </div>
@@ -172,13 +178,10 @@ const favorite = track => {
               <input type="range" className="range" defaultValue={volume} onInput={e => setVolume(e.target.value)} />
             </div>
           </div>
-          <button className="transition-all duration-500 hover:opacity-100 opacity-75">
-            <FullScreenIcon className='w-5 h-5'/>
-          </button>
         </div>
       </div>
     </div>) : (
-      <div className='flex items-center justify-center py-5'>Muzik Yok</div>
+      <div className='sm:flex items-center hidden justify-center py-5'>No Music</div>
     )
     }
     </>

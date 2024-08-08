@@ -27,7 +27,7 @@ const MenuList = () => {
                 </NavLink>
             ))
         }
-        <NavLink to='/library' className='flex items-center gap-2 opacity-80 hover:opacity-100 sm:hidden'>
+        <NavLink to='/favorites' className='flex items-center gap-2 opacity-80 hover:opacity-100 sm:hidden'>
             <span>
                 <LibraryIcon className='w-7 h-7' />
             </span>

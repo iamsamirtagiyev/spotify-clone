@@ -24,6 +24,7 @@ const favorites = () => {
     dispatch(removeFavorite(track));
   };
 
+
   return (
     <div>
       <header className="p-5 h-56 flex flex-col gap-3 justify-end rounded-t-md bg-gradient-to-l from-blue-500 to-red-500">
@@ -50,13 +51,13 @@ const favorites = () => {
                   <td className="flex gap-2.5 items-center py-2">
                     <img
                       className="aspect-square w-11 rounded-md"
-                      src={track.track.album.images[0].url}
+                      src={track?.album.images[0].url}
                       alt="album"
                     />
                     <div className="flex flex-col">
-                      <p className="font-medium">{track.track.name}</p>
+                      <p className="font-medium">{track?.name}</p>
                       <div className="flex gap-1">
-                        {track.track.artists.map((artist, key) => (
+                        {track?.artists.map((artist, key) => (
                           <p className="text-white/30 font-medium" key={key}>
                             {artist.name},
                           </p>
@@ -74,7 +75,7 @@ const favorites = () => {
                   </td>
                   <td className="font-medium text-white/30 text-right pr-5">
                     
-                    {track.track.album.name}
+                    {track?.album.name}
                   </td>
                 </tr>
               ))}
@@ -82,8 +83,8 @@ const favorites = () => {
           </table>
         </div>
       ) : (
-        <div className="w-full h-full p-5 flex items-center justify-center">
-          Muzik yok
+        <div className="w-full hidden h-full p-5 sm:flex items-center justify-center text-white">
+          No Music
         </div>
       )}
     </div>
