@@ -3,16 +3,12 @@ import { Context } from '../context';
 
 const MusicList = ({data}) => {
 
-    const {setTrackId, setTracks, currentTrack,  setCurrentTrack} = useContext(Context)
+    const {setTrackId, tracks, trackId, setTracks, currentTrack,  setCurrentTrack} = useContext(Context)
 
-    setTracks(data.items)
-    setCurrentTrack(data.items[0])
+    setTracks(data?.items)
+    setCurrentTrack(tracks[trackId])
 
-    const convert = ms => {
-        const min = Math.floor((ms/1000/60) << 0)
-        const sec = Math.floor((ms/1000) % 60)
-        return min + ':' + sec
-    }
+    
 
   return (
     <div className='w-full bg-black/40 backdrop-blur-3xl'>
@@ -21,13 +17,13 @@ const MusicList = ({data}) => {
                 <tr className=''>
                     <th>#</th>
                     <th>Title</th>
-                    <th>Album</th>
+                    <th className='text-right'>Album</th>
                 </tr>
             </thead>
             <tbody>
                 {
                     data.items.map((track, key) => (
-                        <tr onClick={() => setTrackId(track.track.id)} key={key} className='hover:bg-white/15 transition-all duration-500 rounded-md mb-2'>
+                        <tr onClick={() => setTrackId(key)} key={key} className='hover:bg-white/15 cursor-pointer transition-all duration-500 rounded-md mb-2'>
                             <td className='p-2 px-3 font-medium'>{key + 1}</td>
                             <td className='flex gap-2.5 items-center py-2'>
                                 <img className='aspect-square w-11 rounded-md' src={track.track.album.images[0].url} alt="album" />
@@ -42,7 +38,7 @@ const MusicList = ({data}) => {
                                     </div>
                                 </div>
                             </td>
-                            <td className='font-medium text-white/30'>{track.track.album.name}</td>
+                            <td className='font-medium text-white/30 text-right pr-5'>{track.track.album.name}</td>
                         </tr>
                     ))
                 }

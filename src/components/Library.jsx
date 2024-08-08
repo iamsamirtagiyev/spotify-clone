@@ -3,8 +3,10 @@ import { AddIcon, ArrowIcon, LibraryIcon } from '../icons'
 import { FaHeart } from "react-icons/fa6";
 import { BsFillPinAngleFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Library = () => {
+  const { favoriteTracks } = useSelector(state => state.favorite)
   return (
     <div className='sm:rounded-md py-5 px-2 bg-zinc-900 hidden sm:flex h-full flex-col'>
         <div className='flex items-center justify-center px-2 md:justify-between w-full'>
@@ -27,7 +29,7 @@ const Library = () => {
                <div className='bg-gradient-to-tl from-red-500 to-blue-500 w-11 h-11 flex items-center justify-center rounded-md text-2xl'>
                  <FaHeart/>
                </div>
-               <div className='md:flex flex-col hidden'>
+               <Link to='/favorites' className='md:flex flex-col hidden'>
                  <span className='font-medium text-lg'>Liked Songs</span>
                  <div className='flex items-center gap-1'>
                     <span className='text-sm text-green-600'>
@@ -35,9 +37,9 @@ const Library = () => {
                     </span>
                     <span className='text-white/20 text-sm font-medium'>Playlist</span>
                     <div className='w-1 h-1 bg-white/20 rounded-full'></div>
-                    <span className='text-white/20 text-sm font-medium'>48 songs</span>
+                    <span className='text-white/20 text-sm font-medium'>{favoriteTracks.length} songs</span>
                  </div>
-               </div>
+               </Link>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ import Home from './pages/Layout/Home'
 import Search from './pages/Layout/Search'
 import Library from './pages/Layout/Library'
 import Playlist from './pages/Layout/Playlist'
+import Favorites from './pages/Layout/favorites'
 
 const router = [
     {
@@ -29,6 +30,10 @@ const router = [
             {
                 path: 'playlist',
                 element: <Playlist/>
+            },
+            {
+                path: 'favorites',
+                element: <Favorites/>
             }
         ]
     }
