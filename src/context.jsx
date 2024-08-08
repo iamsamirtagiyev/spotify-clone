@@ -4,7 +4,7 @@ export const Context = createContext();
 
 export const Provider = ({ children }) => {
   const clientId = "d3df23ab227f461486d6012895eedefe";
-  const redirectURL = 'http://localhost:5173/';
+  const redirectURL = 'http://localhost:5173/' || 'https://spotify-iaye.vercel.app';
   const apiURL = "https://accounts.spotify.com/authorize";
   const scope = [
     "user-read-email",
